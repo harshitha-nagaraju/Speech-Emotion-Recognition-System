@@ -10,9 +10,6 @@ from sklearn.metrics import accuracy_score
 import pyttsx3
 import speech_recognition as sr
 
-# ----------------------------- #
-# Feature Extraction
-# ----------------------------- #
 def extract_features(file_path):
     try:
         audio, sample_rate = librosa.load(file_path, res_type='kaiser_fast')
@@ -21,10 +18,7 @@ def extract_features(file_path):
     except Exception as e:
         print("Error extracting features:", file_path, e)
         return None
-
-# ----------------------------- #
-# Dataset Loading
-# ----------------------------- #
+        
 def load_dataset(dataset_path):
     features = []
     emotions = []
@@ -45,9 +39,6 @@ def load_dataset(dataset_path):
     
     return np.array(features), np.array(emotions)
 
-# ----------------------------- #
-# Audio Recording
-# ----------------------------- #
 def record_audio(filename="my_voice.wav", duration=4, fs=44100):
     print("Recording...")
     audio = sd.rec(int(duration * fs), samplerate=fs, channels=1)
@@ -55,9 +46,6 @@ def record_audio(filename="my_voice.wav", duration=4, fs=44100):
     sf.write(filename, audio, fs)
     print(f"Recording saved as '{filename}'")
 
-# ----------------------------- #
-# Speech to Text
-# ----------------------------- #
 def transcribe_audio(file_path):
     recognizer = sr.Recognizer()
     with sr.AudioFile(file_path) as source:
@@ -72,9 +60,6 @@ def transcribe_audio(file_path):
             print("Speech recognition service error.")
     return ""
 
-# ----------------------------- #
-# Predict Emotion
-# ----------------------------- #
 def predict_emotion(model, encoder, filename):
     features = extract_features(filename)
     if features is None:
@@ -104,9 +89,7 @@ def predict_emotion(model, encoder, filename):
     engine.say(message)
     engine.runAndWait()
 
-# ----------------------------- #
-# Main Program
-# ----------------------------- #
+
 if __name__ == "__main__":
     dataset_path = r"C:\Users\harsh\Downloads\ravdess" # Replace with your actual dataset path
 
